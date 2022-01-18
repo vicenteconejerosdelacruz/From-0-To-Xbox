@@ -1,0 +1,4 @@
+pyramid texture created by markus53
+https://pixabay.com/photos/architecture-brick-building-285093/
+
+the images were modified/converted to dds format using texconv

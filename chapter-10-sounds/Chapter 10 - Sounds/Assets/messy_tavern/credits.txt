@@ -1,0 +1,7 @@
+Messy Tavern created by Nadia Ribitis
+https://sketchfab.com/3d-models/messy-tavern-40736fa5298c4e738633c51be872c4b1
+
+shared under CC Atribution License
+https://creativecommons.org/licenses/by/4.0/
+
+the distributed textures were converted to dds file format using texconv

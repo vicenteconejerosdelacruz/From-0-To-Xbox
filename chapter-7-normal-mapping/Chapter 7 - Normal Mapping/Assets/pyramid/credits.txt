@@ -1,0 +1,10 @@
+pyramid texture created by markus53
+https://pixabay.com/photos/architecture-brick-building-285093/
+
+glyph texture created by LorettaLynn
+https://pixabay.com/photos/hieroglyph-glyphs-tomb-saqqarah-597658/
+
+the pyramid normal map was generated using NormalMap Online Tool
+https://cpetry.github.io/NormalMap-Online/
+
+the images were modified/converted to dds format using texconv

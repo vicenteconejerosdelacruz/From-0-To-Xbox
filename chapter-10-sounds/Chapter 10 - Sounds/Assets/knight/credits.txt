@@ -1,0 +1,7 @@
+Knight by Ohnarev created by Northcliffe
+https://sketchfab.com/3d-models/knight-by-ohnarev-6a63b0a50c064f2c8c0f0b2277a2363f
+
+shared under CC Atribution License
+https://creativecommons.org/licenses/by/4.0/
+
+the distributed textures were converted to dds file format using texconv

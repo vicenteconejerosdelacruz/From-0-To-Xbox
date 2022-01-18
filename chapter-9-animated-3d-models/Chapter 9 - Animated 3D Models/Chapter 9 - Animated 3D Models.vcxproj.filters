@@ -1,0 +1,410 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="App.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Renderer\DeviceUtils.cpp" />
+    <ClCompile Include="Renderer\Renderer.cpp" />
+    <ClCompile Include="Primitives\Cube.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Lights\PointLight.cpp">
+      <Filter>Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="Lights\SpotLight.cpp">
+      <Filter>Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="Lights\DirectionalLight.cpp">
+      <Filter>Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="Lights\AmbientLight.cpp">
+      <Filter>Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="Primitives\Floor.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Primitives\Pyramid.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="2D\Label.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2D\KeyboardButton.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2D\XBoxOneBumper.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2D\XBoxOneButton.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2D\XBoxOneTrigger.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2D\XBoxOneViewButton.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2D\FPSText.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="3D\Static3DModel.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\AssetsUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\AssimpSkinning.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="3D\Animated3DModel.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="2D\XBoxOneDPad.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="App.h" />
+    <ClInclude Include="Common\d3dx12.h" />
+    <ClInclude Include="Common\DirectXHelper.h" />
+    <ClInclude Include="Common\StepTimer.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Renderer\DeviceUtils.h" />
+    <ClInclude Include="Renderer\Renderer.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Primitives\Cube.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Lights\PointLight.h">
+      <Filter>Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="Lights\SpotLight.h">
+      <Filter>Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="Lights\DirectionalLight.h">
+      <Filter>Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="Lights\AmbientLight.h">
+      <Filter>Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="Primitives\Floor.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Primitives\Pyramid.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\VertexFormats.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Render3D.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="2D\Label.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="2D\KeyboardButton.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="2D\XBoxOneBumper.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="2D\XBoxOneButton.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="2D\XBoxOneTrigger.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="2D\XBoxOneViewButton.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="2D\FPSText.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\Constants\LightingConstantsBuffer.h">
+      <Filter>Shaders\Constants</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\Constants\LightingShaderConstants.h">
+      <Filter>Shaders\Constants</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\Utils\Gamma.h">
+      <Filter>Shaders\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\Utils\Lighting.h">
+      <Filter>Shaders\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\Utils\ShadowMap.h">
+      <Filter>Shaders\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\Constants\ShadowMapAlphaCutConstantsBuffer.h">
+      <Filter>Shaders\Constants</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\Constants\ShadowMapAlphaCutShaderConstants.h">
+      <Filter>Shaders\Constants</Filter>
+    </ClInclude>
+    <ClInclude Include="3D\Static3DModel.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="3D\Animated3DModel.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="2D\XBoxOneDPad.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\Constants\SkinningConstantsBuffer.h">
+      <Filter>Shaders\Constants</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\Constants\SkinningShaderConstants.h">
+      <Filter>Shaders\Constants</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\Constants\SkinningShadowMapAlphaCutConstantsBuffer.h">
+      <Filter>Shaders\Constants</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\Constants\SkinningShadowMapAlphaCutShaderConstants.h">
+      <Filter>Shaders\Constants</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\AssetsUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\AssimpSkinning.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Chapter 9 - Animated 3D Models.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Square150x150Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Wide310x150Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square44x44Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\LockScreenLogo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Assets\crate\fragile.dds">
+      <Filter>Assets\crate</Filter>
+    </None>
+    <None Include="Assets\crate\crate.dds">
+      <Filter>Assets\crate</Filter>
+    </None>
+    <None Include="Assets\crate\credits.txt">
+      <Filter>Assets\crate</Filter>
+    </None>
+    <None Include="Assets\pyramid\pyramid.dds">
+      <Filter>Assets\pyramid</Filter>
+    </None>
+    <None Include="Assets\pyramid\credits.txt">
+      <Filter>Assets\pyramid</Filter>
+    </None>
+    <None Include="assimp-vc142-mt.dll" />
+    <None Include="Assets\pyramid\pyramidNormalMap.dds">
+      <Filter>Assets\pyramid</Filter>
+    </None>
+    <None Include="Assets\messy_tavern\scene.bin">
+      <Filter>Assets\messy_tavern</Filter>
+    </None>
+    <None Include="Assets\messy_tavern\scene.gltf">
+      <Filter>Assets\messy_tavern</Filter>
+    </None>
+    <None Include="Assets\messy_tavern\credits.txt">
+      <Filter>Assets\messy_tavern</Filter>
+    </None>
+    <None Include="Assets\messy_tavern\textures\Tables_Tabourets_normal.dds">
+      <Filter>Assets\messy_tavern</Filter>
+    </None>
+    <None Include="Assets\messy_tavern\textures\Wall_Ground_diffuse.dds">
+      <Filter>Assets\messy_tavern</Filter>
+    </None>
+    <None Include="Assets\messy_tavern\textures\Wall_Ground_normal.dds">
+      <Filter>Assets\messy_tavern</Filter>
+    </None>
+    <None Include="Assets\messy_tavern\textures\Misc_normal.dds">
+      <Filter>Assets\messy_tavern</Filter>
+    </None>
+    <None Include="Assets\messy_tavern\textures\Fireplace_diffuse.dds">
+      <Filter>Assets\messy_tavern</Filter>
+    </None>
+    <None Include="Assets\messy_tavern\textures\Fireplace_normal.dds">
+      <Filter>Assets\messy_tavern</Filter>
+    </None>
+    <None Include="Assets\messy_tavern\textures\Flames_diffuse.dds">
+      <Filter>Assets\messy_tavern</Filter>
+    </None>
+    <None Include="Assets\messy_tavern\textures\Misc_diffuse.dds">
+      <Filter>Assets\messy_tavern</Filter>
+    </None>
+    <None Include="Assets\messy_tavern\textures\Tables_Tabourets_diffuse.dds">
+      <Filter>Assets\messy_tavern</Filter>
+    </None>
+    <None Include="Assets\messy_tavern\textures\Stairs_diffuse.dds">
+      <Filter>Assets\messy_tavern</Filter>
+    </None>
+    <None Include="Assets\messy_tavern\textures\Barrels_diffuse.dds">
+      <Filter>Assets\messy_tavern</Filter>
+    </None>
+    <None Include="Assets\knight\scene.bin">
+      <Filter>Assets\knight</Filter>
+    </None>
+    <None Include="Assets\knight\scene.gltf">
+      <Filter>Assets\knight</Filter>
+    </None>
+    <None Include="Assets\knight\textures\SwordFur_baseColor.dds">
+      <Filter>Assets\knight</Filter>
+    </None>
+    <None Include="Assets\knight\textures\SwordFur_normal.dds">
+      <Filter>Assets\knight</Filter>
+    </None>
+    <None Include="Assets\knight\textures\body_retop_baseColor.dds">
+      <Filter>Assets\knight</Filter>
+    </None>
+    <None Include="Assets\knight\textures\body_retop_normal.dds">
+      <Filter>Assets\knight</Filter>
+    </None>
+    <None Include="Assets\knight\textures\face_baseColor.dds">
+      <Filter>Assets\knight</Filter>
+    </None>
+    <None Include="Assets\knight\textures\face_normal.dds">
+      <Filter>Assets\knight</Filter>
+    </None>
+    <None Include="Assets\knight\textures\Secondary_baseColor.dds">
+      <Filter>Assets\knight</Filter>
+    </None>
+    <None Include="Assets\knight\textures\Secondary_normal.dds">
+      <Filter>Assets\knight</Filter>
+    </None>
+    <None Include="Assets\knight\credits.txt">
+      <Filter>Assets\knight</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{7d2a9648-f071-4637-8700-8ec5d4bd6752}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\VertexShaders">
+      <UniqueIdentifier>{21100888-d7a5-45f4-8f51-cfae0986abcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\PixelShaders">
+      <UniqueIdentifier>{a3521866-29d6-44cb-81d5-bc37db44d67a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{1aea2307-4f39-4ae2-928f-8b1f96128cef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\crate">
+      <UniqueIdentifier>{3bd76f75-0187-43bc-a057-2157909bd095}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Constants">
+      <UniqueIdentifier>{98cc3b02-046f-4723-bdde-232b9d2a4a08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2D">
+      <UniqueIdentifier>{244494d2-c1d8-448e-9e79-c7b2d3d0c350}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3D">
+      <UniqueIdentifier>{00891780-3705-45c0-8292-d18d6e62cab2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lights">
+      <UniqueIdentifier>{8bc7cbf6-c7cb-4126-9681-092693ade61b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Utils">
+      <UniqueIdentifier>{eb8d1423-cebd-4887-85b5-e8907284efba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\pyramid">
+      <UniqueIdentifier>{16e1ee44-f028-43e4-9e7d-34708e6b2cb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\messy_tavern">
+      <UniqueIdentifier>{e31eee68-48d7-4308-ac61-db11ce8284d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{4f821ad9-347e-47b8-8f6b-f8341fe5afca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\knight">
+      <UniqueIdentifier>{49d76aa4-20b5-4927-841e-d8ff145f8c20}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\PixelShaders\Color.hlsl">
+      <Filter>Shaders\PixelShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PixelShaders\TexCoord.hlsl">
+      <Filter>Shaders\PixelShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\VertexShaders\Color.hlsl">
+      <Filter>Shaders\VertexShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\VertexShaders\TexCoord.hlsl">
+      <Filter>Shaders\VertexShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\VertexShaders\Lighting.hlsl">
+      <Filter>Shaders\VertexShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PixelShaders\Lighting.hlsl">
+      <Filter>Shaders\PixelShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PixelShaders\Floor.hlsl">
+      <Filter>Shaders\PixelShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PixelShaders\ShadowMap.hlsl">
+      <Filter>Shaders\PixelShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\VertexShaders\Floor.hlsl">
+      <Filter>Shaders\VertexShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\VertexShaders\ShadowMap.hlsl">
+      <Filter>Shaders\VertexShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PixelShaders\NormalMapping.hlsl">
+      <Filter>Shaders\PixelShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\VertexShaders\NormalMapping.hlsl">
+      <Filter>Shaders\VertexShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PixelShaders\ShadowMapAlphaCut.hlsl">
+      <Filter>Shaders\PixelShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PixelShaders\Static3DModel.hlsl">
+      <Filter>Shaders\PixelShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\VertexShaders\ShadowMapAlphaCut.hlsl">
+      <Filter>Shaders\VertexShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\VertexShaders\Static3DModel.hlsl">
+      <Filter>Shaders\VertexShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PixelShaders\SkinningShadowMap.hlsl">
+      <Filter>Shaders\PixelShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PixelShaders\SkinningShadowMapAlphaCut.hlsl">
+      <Filter>Shaders\PixelShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\VertexShaders\Skinning.hlsl">
+      <Filter>Shaders\VertexShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\VertexShaders\SkinningShadowMap.hlsl">
+      <Filter>Shaders\VertexShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\VertexShaders\SkinningShadowMapAlphaCut.hlsl">
+      <Filter>Shaders\VertexShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PixelShaders\Skinning.hlsl">
+      <Filter>Shaders\PixelShaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>

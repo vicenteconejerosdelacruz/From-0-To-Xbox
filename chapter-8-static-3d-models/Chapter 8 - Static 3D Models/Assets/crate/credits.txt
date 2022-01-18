@@ -1,0 +1,8 @@
+crate texture created by dactilardesign
+https://www.deviantart.com/dactilardesign/art/Crate-generator-342135330
+
+fragile texture created by geralt
+https://pixabay.com/illustrations/stamp-characters-label-fragile-143191/
+
+the images were modified/converted to dds format using texconv
+https://github.com/Microsoft/DirectXTex/wiki/Texconv
