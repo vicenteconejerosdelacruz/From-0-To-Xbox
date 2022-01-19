@@ -1,0 +1,13 @@
+fire texture available on
+https://acegif.com/fire-on-gifs/
+https://acegif.com/wp-content/gifs/fire-65.gif
+
+animated flame available on
+https://commons.wikimedia.org/wiki/File:Animated-flame.gif
+
+shared under Attribution 3.0 Unported (CC BY 3.0)
+https://creativecommons.org/licenses/by/3.0/
+
+images were resized and converted to pngs using https://ezgif.com/split
+assembled into a dds file using texassemble
+mip maps were generated using texconv
