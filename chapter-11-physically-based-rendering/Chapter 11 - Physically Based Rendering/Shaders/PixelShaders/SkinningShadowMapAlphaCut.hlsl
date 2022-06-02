@@ -9,7 +9,7 @@ struct PixelShaderInput
 	float2 uv : TEXCOORD0;
 };
 
-void main(PixelShaderInput input) : SV_TARGET
+void main(PixelShaderInput input)
 {
 	float4 texturesColor = texs[0].Sample(samp0, input.uv);
 

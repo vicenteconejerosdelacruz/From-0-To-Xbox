@@ -78,7 +78,7 @@ void Pyramid::Initialize(UINT numFrames, ComPtr<ID3D12Device2>	d3dDevice, ComPtr
 			ComPtr<ID3DBlob> pSignature;
 			ComPtr<ID3DBlob> pError;
 			DX::ThrowIfFailed(D3D12SerializeRootSignature(&descRootSignature, D3D_ROOT_SIGNATURE_VERSION_1, pSignature.GetAddressOf(), pError.GetAddressOf()));
-			DX::ThrowIfFailed(d3dDevice->CreateRootSignature(0, pSignature->GetBufferPointer(), pSignature->GetBufferSize(), IID_PPV_ARGS(&rootSignature)));
+			DX::ThrowIfFailed(d3dDevice->CreateRootSignature(0, pSignature->GetBufferPointer(), pSignature->GetBufferSize(), IID_PPV_ARGS(rootSignature.ReleaseAndGetAddressOf())));
 			NAME_D3D12_OBJECT(rootSignature);
 		}
 
@@ -94,7 +94,7 @@ void Pyramid::Initialize(UINT numFrames, ComPtr<ID3D12Device2>	d3dDevice, ComPtr
 		//inicializa el pipeline state
 		D3D12_GRAPHICS_PIPELINE_STATE_DESC state = {};
 		InitializePipelineState(state, inputLayout, _countof(inputLayout), rootSignature, vertexShader, pixelShader);
-		DX::ThrowIfFailed(d3dDevice->CreateGraphicsPipelineState(&state, IID_PPV_ARGS(&pipelineState)));
+		DX::ThrowIfFailed(d3dDevice->CreateGraphicsPipelineState(&state, IID_PPV_ARGS(pipelineState.ReleaseAndGetAddressOf())));
 
 		vertexShader.clear();
 		pixelShader.clear();
@@ -136,7 +136,7 @@ void Pyramid::Initialize(UINT numFrames, ComPtr<ID3D12Device2>	d3dDevice, ComPtr
 			ComPtr<ID3DBlob> pSignature;
 			ComPtr<ID3DBlob> pError;
 			DX::ThrowIfFailed(D3D12SerializeRootSignature(&descRootSignature, D3D_ROOT_SIGNATURE_VERSION_1, pSignature.GetAddressOf(), pError.GetAddressOf()));
-			DX::ThrowIfFailed(d3dDevice->CreateRootSignature(0, pSignature->GetBufferPointer(), pSignature->GetBufferSize(), IID_PPV_ARGS(&shadowMapRootSignature)));
+			DX::ThrowIfFailed(d3dDevice->CreateRootSignature(0, pSignature->GetBufferPointer(), pSignature->GetBufferSize(), IID_PPV_ARGS(shadowMapRootSignature.ReleaseAndGetAddressOf())));
 			NAME_D3D12_OBJECT(shadowMapRootSignature);
 		}
 
@@ -149,7 +149,7 @@ void Pyramid::Initialize(UINT numFrames, ComPtr<ID3D12Device2>	d3dDevice, ComPtr
 		//inicializa el pipeline state para el shadow map
 		D3D12_GRAPHICS_PIPELINE_STATE_DESC state = {};
 		InitializeShadowMapPipelineState(state, inputLayout, _countof(inputLayout), shadowMapRootSignature.Get(), shadowMapVertexShader, shadowMapPixelShader);
-		DX::ThrowIfFailed(d3dDevice->CreateGraphicsPipelineState(&state, IID_PPV_ARGS(&shadowMapPipelineState)));
+		DX::ThrowIfFailed(d3dDevice->CreateGraphicsPipelineState(&state, IID_PPV_ARGS(shadowMapPipelineState.ReleaseAndGetAddressOf())));
 
 		shadowMapVertexShader.clear();
 		shadowMapPixelShader.clear();

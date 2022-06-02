@@ -1,4 +1,4 @@
-matrix worldViewProjection : register(b0);
+#include "ShadowMapAlphaCutConstantsBuffer.h"
 
 struct VertexShaderInput
 {

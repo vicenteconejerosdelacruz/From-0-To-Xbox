@@ -236,7 +236,6 @@
     <None Include="Assets\pyramid\credits.txt">
       <Filter>Assets\pyramid</Filter>
     </None>
-    <None Include="assimp-vc142-mt.dll" />
     <None Include="Assets\pyramid\pyramidNormalMap.dds">
       <Filter>Assets\pyramid</Filter>
     </None>

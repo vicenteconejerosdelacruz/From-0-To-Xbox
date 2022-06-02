@@ -94,7 +94,7 @@ void XXX(float3 viewDirection,float3 directionToLight,float3 normal,float3 f0, f
 
 float4 main(PixelShaderInput input) : SV_TARGET
 {
-	float4 texturesColor = 0.xxxx;
+	float4 texturesColor = 0;
 	for (uint i = 0; i < numTextures; i++) {
 		texturesColor += texs[i].Sample(samp0, input.uv);
 	}
@@ -137,12 +137,12 @@ float4 main(PixelShaderInput input) : SV_TARGET
 	float3 directionalLightSpecularFactor;
 	XXX(input.viewDirection, -directionalLightDirection.xyz, normal, f0, f90, albedoColor, roughness, directionalDiffuseLightFactor, directionalLightSpecularFactor);
 
-	float spotLightDiffuseFactor;
-	float spotLightSpecularFactor;
+	float3 spotLightDiffuseFactor;
+	float3 spotLightSpecularFactor;
 	XXX(input.viewDirection, normalize(spotLightPosition.xyz - input.worldPos).xyz, normal, f0, f90, albedoColor, roughness, spotLightDiffuseFactor, spotLightSpecularFactor);
 
-	float pointLightDiffuseFactor;
-	float pointLightSpecularFactor;
+	float3 pointLightDiffuseFactor;
+	float3 pointLightSpecularFactor;
 	XXX(input.viewDirection, normalize(pointLightPosition.xyz - input.worldPos).xyz, normal, f0, f90, albedoColor, roughness, pointLightDiffuseFactor, pointLightSpecularFactor);
 
 	//calculate the directional light diffuse contribution

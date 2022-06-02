@@ -1,6 +1,102 @@
 #include "pch.h"
 #include "DeviceUtils.h"
 #include "../Common/DirectXHelper.h"
+#include "../Utils/AssetsUtils.h"
+
+const D3D_FEATURE_LEVEL d3dFeatureLevel = D3D_FEATURE_LEVEL::D3D_FEATURE_LEVEL_11_0;
+
+// This method acquires the first available hardware adapter that supports Direct3D 12.
+// If no such adapter can be found, try WARP. Otherwise throw an exception.
+void GetAdapter(ComPtr<IDXGIFactory4> dxgiFactory, IDXGIAdapter1** ppAdapter)
+{
+	*ppAdapter = nullptr;
+
+	ComPtr<IDXGIAdapter1> adapter;
+
+#if defined(__dxgi1_6_h__) && defined(NTDDI_WIN10_RS4)
+	ComPtr<IDXGIFactory6> factory6;
+	HRESULT hr = dxgiFactory.As(&factory6);
+	if (SUCCEEDED(hr))
+	{
+		for (UINT adapterIndex = 0;
+			SUCCEEDED(factory6->EnumAdapterByGpuPreference(
+				adapterIndex,
+				DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE,
+				IID_PPV_ARGS(adapter.ReleaseAndGetAddressOf())));
+			adapterIndex++)
+		{
+			DXGI_ADAPTER_DESC1 desc;
+			DX::ThrowIfFailed(adapter->GetDesc1(&desc));
+
+			if (desc.Flags & DXGI_ADAPTER_FLAG_SOFTWARE)
+			{
+				// Don't select the Basic Render Driver adapter.
+				continue;
+			}
+
+			// Check to see if the adapter supports Direct3D 12, but don't create the actual device yet.
+			if (SUCCEEDED(D3D12CreateDevice(adapter.Get(), d3dFeatureLevel, _uuidof(ID3D12Device), nullptr)))
+			{
+#ifdef _DEBUG
+				wchar_t buff[256] = {};
+				swprintf_s(buff, L"Direct3D Adapter (%u): VID:%04X, PID:%04X - %ls\n", adapterIndex, desc.VendorId, desc.DeviceId, desc.Description);
+				OutputDebugStringW(buff);
+#endif
+				break;
+			}
+		}
+	}
+#endif
+	if (!adapter)
+	{
+		for (UINT adapterIndex = 0;
+			SUCCEEDED(dxgiFactory->EnumAdapters1(
+				adapterIndex,
+				adapter.ReleaseAndGetAddressOf()));
+			++adapterIndex)
+		{
+			DXGI_ADAPTER_DESC1 desc;
+			DX::ThrowIfFailed(adapter->GetDesc1(&desc));
+
+			if (desc.Flags & DXGI_ADAPTER_FLAG_SOFTWARE)
+			{
+				// Don't select the Basic Render Driver adapter.
+				continue;
+			}
+
+			// Check to see if the adapter supports Direct3D 12, but don't create the actual device yet.
+			if (SUCCEEDED(D3D12CreateDevice(adapter.Get(), d3dFeatureLevel, _uuidof(ID3D12Device), nullptr)))
+			{
+#ifdef _DEBUG
+				wchar_t buff[256] = {};
+				swprintf_s(buff, L"Direct3D Adapter (%u): VID:%04X, PID:%04X - %ls\n", adapterIndex, desc.VendorId, desc.DeviceId, desc.Description);
+				OutputDebugStringW(buff);
+#endif
+				break;
+			}
+		}
+	}
+
+#if !defined(NDEBUG)
+	if (!adapter)
+	{
+		// Try WARP12 instead
+		if (FAILED(dxgiFactory->EnumWarpAdapter(IID_PPV_ARGS(adapter.ReleaseAndGetAddressOf()))))
+		{
+			throw std::exception("WARP12 not available. Enable the 'Graphics Tools' optional feature");
+		}
+
+		OutputDebugStringA("Direct3D Adapter - WARP12\n");
+	}
+#endif
+
+	if (!adapter)
+	{
+		throw std::exception("No Direct3D 12 device found");
+	}
+
+	*ppAdapter = adapter.Detach();
+}
 
 ComPtr<IDXGIAdapter4> GetAdapter() {
 
@@ -14,6 +110,11 @@ ComPtr<IDXGIAdapter4> GetAdapter() {
 
 	ComPtr<IDXGIAdapter1> dxgiAdapter1;
 	ComPtr<IDXGIAdapter4> dxgiAdapter4;
+	GetAdapter(dxgiFactory, dxgiAdapter1.ReleaseAndGetAddressOf());
+	dxgiAdapter1.As(&dxgiAdapter4);
+
+	return dxgiAdapter4;
+	/*
 	{
 		SIZE_T maxDedicatedVideoMemory = 0;
 		for (UINT i = 0; dxgiFactory->EnumAdapters1(i, &dxgiAdapter1) != DXGI_ERROR_NOT_FOUND; ++i)
@@ -32,13 +133,13 @@ ComPtr<IDXGIAdapter4> GetAdapter() {
 		}
 	}
 
-	return dxgiAdapter4;
+	return dxgiAdapter4;*/
 }
 
 ComPtr<ID3D12Device2> CreateDevice(ComPtr<IDXGIAdapter4> adapter)
 {
 	ComPtr<ID3D12Device2> d3d12Device2;
-	DX::ThrowIfFailed(D3D12CreateDevice(adapter.Get(), D3D_FEATURE_LEVEL_12_1, IID_PPV_ARGS(&d3d12Device2)));
+	DX::ThrowIfFailed(D3D12CreateDevice(adapter.Get(), d3dFeatureLevel, IID_PPV_ARGS(&d3d12Device2)));
 
 	// Enable debug messages in debug mode.
 #if defined(_DEBUG)
@@ -292,7 +393,7 @@ void CreateTextureResource(ComPtr<ID3D12Device2> d3dDevice, ComPtr<ID3D12Graphic
 		texture = texturesCache[path];
 		nMipMaps = texturesCacheMipMaps[path];
 	} else {
-		//to simplify things use dds image format and load trough DirectXTK12
+		//to simplify things use dds image format and load through DirectXTK12
 		//para simplificar las cosas usamos el formato de imagenes dds y lo cargamos a travez de DirecXTK12
 		std::unique_ptr<uint8_t[]> ddsData;
 		std::vector<D3D12_SUBRESOURCE_DATA> subresources;
@@ -415,6 +516,14 @@ void InitializeIndexBufferView(ComPtr<ID3D12Device2> d3dDevice, ComPtr<ID3D12Gra
 	ibvData.indexBufferView.BufferLocation = ibvData.indexBuffer->GetGPUVirtualAddress();
 	ibvData.indexBufferView.Format = DXGI_FORMAT_R16_UINT;
 	ibvData.indexBufferView.SizeInBytes = sizeof(UINT16)*indicesCount;
+	NAME_D3D12_OBJECT(ibvData.indexBuffer);
+}
+
+void InitializeIndexBufferView32(ComPtr<ID3D12Device2> d3dDevice, ComPtr<ID3D12GraphicsCommandList2> commandList, const void* indices, UINT indicesCount, IndexBufferViewData& ibvData) {
+	UpdateBufferResource(d3dDevice, commandList, ibvData.indexBuffer, ibvData.indexBufferUpload, indicesCount, sizeof(UINT32), indices);
+	ibvData.indexBufferView.BufferLocation = ibvData.indexBuffer->GetGPUVirtualAddress();
+	ibvData.indexBufferView.Format = DXGI_FORMAT_R32_UINT;
+	ibvData.indexBufferView.SizeInBytes = sizeof(UINT32) * indicesCount;
 	NAME_D3D12_OBJECT(ibvData.indexBuffer);
 }
 

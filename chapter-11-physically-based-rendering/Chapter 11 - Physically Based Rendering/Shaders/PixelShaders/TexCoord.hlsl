@@ -18,5 +18,5 @@ float4 main(PixelShaderInput input) : SV_TARGET
 		texturesColor += texs[i].Sample(samp0, input.uv).rgb;
 	}
 
-	return float4(pow(texturesColor.rgb, INVGAMMA ), 1.0f);
+	return float4(pow(abs(texturesColor.rgb), INVGAMMA ), 1.0f);
 }

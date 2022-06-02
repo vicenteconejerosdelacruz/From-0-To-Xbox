@@ -24,8 +24,14 @@
 #include <agile.h>
 #include <concrt.h>
 #include <string>
-#include <set>
+#include <iostream>
+#include <sstream>
 #include <map>
+#include <set>
+#include <functional>
+#include <ppltasks.h>
+#include <robuffer.h>
+#include <stack>
 
 #if defined(_DEBUG)
 #include <dxgidebug.h>

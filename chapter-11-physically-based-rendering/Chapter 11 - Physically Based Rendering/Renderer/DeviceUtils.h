@@ -9,6 +9,7 @@ using namespace Windows::Graphics::Display;
 using namespace Platform;
 using namespace DirectX;
 
+void GetAdapter(D3D_FEATURE_LEVEL d3dMinFeatureLevel, ComPtr<IDXGIFactory4> dxgiFactory, IDXGIAdapter1** ppAdapter);
 ComPtr<IDXGIAdapter4> GetAdapter();
 ComPtr<ID3D12Device2> CreateDevice(ComPtr<IDXGIAdapter4> adapter);
 ComPtr<ID3D12CommandQueue> CreateCommandQueue(ComPtr<ID3D12Device2> device);
@@ -74,6 +75,7 @@ struct IndexBufferViewData {
 };
 
 void InitializeIndexBufferView(ComPtr<ID3D12Device2> d3dDevice, ComPtr<ID3D12GraphicsCommandList2> commandList, const void* indices, UINT indicesCount, IndexBufferViewData& ibvData);
+void InitializeIndexBufferView32(ComPtr<ID3D12Device2> d3dDevice, ComPtr<ID3D12GraphicsCommandList2> commandList, const void* indices, UINT indicesCount, IndexBufferViewData& ibvData);
 
 //constants buffers
 template<typename T> struct ConstantsBufferViewData {
@@ -147,3 +149,25 @@ void InitializeShadowMapPipelineState(D3D12_GRAPHICS_PIPELINE_STATE_DESC& state,
 
 //shadow map
 void CreateShadowMapResourceView(ComPtr<ID3D12Device2> d3dDevice, ComPtr<ID3D12Resource> shadowMap, CD3DX12_CPU_DESCRIPTOR_HANDLE shadowMapCpuHandle);
+
+template<typename T>
+CD3DX12_CPU_DESCRIPTOR_HANDLE CreateTexturesResourceViews(
+	UINT numFrames,
+	ComPtr<ID3D12Device2> d3dDevice,
+	ConstantsBufferViewData<T>& cbvMeshData,
+	bool hasNormalMap,
+	ComPtr<ID3D12Resource>& diffuseTexture,
+	D3D12_SHADER_RESOURCE_VIEW_DESC& diffuseSrvDesc,
+	ComPtr<ID3D12Resource>& normalMapTexture,
+	D3D12_SHADER_RESOURCE_VIEW_DESC& normalMapSrvDesc
+) {
+	CD3DX12_CPU_DESCRIPTOR_HANDLE cbvCpuHandle = InitializeConstantsBufferView(numFrames, 5U, d3dDevice, cbvMeshData);
+	CD3DX12_CPU_DESCRIPTOR_HANDLE diffuseCpuHandle(cbvCpuHandle);
+	d3dDevice->CreateShaderResourceView(diffuseTexture.Get(), &diffuseSrvDesc, diffuseCpuHandle);
+	if (hasNormalMap) {
+		CD3DX12_CPU_DESCRIPTOR_HANDLE normalMapCpuHandle(cbvCpuHandle);
+		normalMapCpuHandle.Offset(cbvMeshData.cbvDescriptorSize);
+		d3dDevice->CreateShaderResourceView(normalMapTexture.Get(), &normalMapSrvDesc, normalMapCpuHandle);
+	}
+	return cbvCpuHandle;
+}

@@ -63,7 +63,7 @@ void Floor::Initialize(UINT numFrames, ComPtr<ID3D12Device2>	d3dDevice, ComPtr<I
 			ComPtr<ID3DBlob> pSignature;
 			ComPtr<ID3DBlob> pError;
 			DX::ThrowIfFailed(D3D12SerializeRootSignature(&descRootSignature, D3D_ROOT_SIGNATURE_VERSION_1, pSignature.GetAddressOf(), pError.GetAddressOf()));
-			DX::ThrowIfFailed(d3dDevice->CreateRootSignature(0, pSignature->GetBufferPointer(), pSignature->GetBufferSize(), IID_PPV_ARGS(&rootSignature)));
+			DX::ThrowIfFailed(d3dDevice->CreateRootSignature(0, pSignature->GetBufferPointer(), pSignature->GetBufferSize(), IID_PPV_ARGS(rootSignature.ReleaseAndGetAddressOf())));
 			NAME_D3D12_OBJECT(rootSignature);
 		}
 
@@ -77,7 +77,7 @@ void Floor::Initialize(UINT numFrames, ComPtr<ID3D12Device2>	d3dDevice, ComPtr<I
 		//inicializa el pipeline state
 		D3D12_GRAPHICS_PIPELINE_STATE_DESC state = {};
 		InitializePipelineState(state, inputLayout, _countof(inputLayout), rootSignature, vertexShader, pixelShader);
-		DX::ThrowIfFailed(d3dDevice->CreateGraphicsPipelineState(&state, IID_PPV_ARGS(&pipelineState)));
+		DX::ThrowIfFailed(d3dDevice->CreateGraphicsPipelineState(&state, IID_PPV_ARGS(pipelineState.ReleaseAndGetAddressOf())));
 
 		vertexShader.clear();
 		pixelShader.clear();
