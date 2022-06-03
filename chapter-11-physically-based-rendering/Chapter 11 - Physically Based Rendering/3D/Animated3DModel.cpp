@@ -36,7 +36,7 @@ void Animated3DModel::Initialize(UINT numFrames, ComPtr<ID3D12Device2>	d3dDevice
 
 	//now build the nodes hierarchy
 	//ahora construye la jerarquia de los nodos
-	BuildNodesHierarchy(aiModel->mRootNode, &rootHierarchy);
+	BuildNodesHierarchy(aiModel->mRootNode, &rootHierarchy, multiplyNavigator);
 
 	//go through all the meshes in the model
 	//recorre todos las mallas del modelo
@@ -497,7 +497,8 @@ void Animated3DModel::Step(FLOAT delta) {
 	float animationLength = animationsLength[currentAnimation];
 	float animationTime = (animationLength!=0.0f)?fmodf(currentAnimationTime, animationLength):0.0f;
 
-	TraverseNodeHierarchy(animationTime, &rootHierarchy, animationsChannelsKeys[currentAnimation], boneInfo, rootNodeInverseTransform, XMMatrixIdentity());
+	//TraverseNodeHierarchy(animationTime, &rootHierarchy, animationsChannelsKeys[currentAnimation], boneInfo, rootNodeInverseTransform, XMMatrixIdentity());
+	TraverseMultiplycationQueue(animationTime, multiplyNavigator, animationsChannelsKeys[currentAnimation], boneInfo, rootNodeInverseTransform, XMMatrixIdentity());
 }
 
 void Animated3DModel::UpdateConstantsBuffer(UINT backBufferIndex, XMMATRIX viewProjection, XMVECTOR eyePos, XMVECTOR ambientLightColor, XMVECTOR directionalLightDirection, XMVECTOR directionalLightColor, XMVECTOR spotLightPosition, XMVECTOR spotLightColor, XMVECTOR spotLightDirectionAndAngle, XMVECTOR spotLightAttenuation, XMVECTOR pointLightColor, XMVECTOR pointLightPosition, XMVECTOR pointLightAttenuation, BOOL shadowMapsEnabled, XMMATRIX directionalLightShadowMapProjection, XMFLOAT2 directionalLightShadowMapTexelInvSize, XMMATRIX spotLightShadowMapProjection, XMFLOAT2 spotLightShadowMapTexelInvSize, XMMATRIX pointLightShadowMapProjection[6], BOOL normalMappingEnabled) {

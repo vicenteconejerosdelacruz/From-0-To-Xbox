@@ -36,18 +36,23 @@ void BuildAnimationChannelsKeys(const aiScene* model, std::map<std::string, std:
 	}
 }
 
-void BuildNodesHierarchy(aiNode* node, HierarchyNode* nodeInHierarchy){
+void BuildNodesHierarchy(aiNode* node, HierarchyNode* nodeInHierarchy, std::queue<multiplyCmd>& multiplyNavigator){
 	nodeInHierarchy->numChildren = 0;
 	nodeInHierarchy->children = nullptr;
 	nodeInHierarchy->name = node->mName.C_Str();
 	nodeInHierarchy->transformation = XMMATRIX(&node->mTransformation.a1);
 	if (node->mNumChildren > 0) {
+		multiplyNavigator.push(multiplyCmd(nodeInHierarchy,true));
 		nodeInHierarchy->numChildren = node->mNumChildren;
 		nodeInHierarchy->children = new HierarchyNode[nodeInHierarchy->numChildren];
 		UINT childOffset = 0;
 		for (auto childNode = node->mChildren; childNode < (node->mChildren + node->mNumChildren); childNode++, childOffset++) {
-			BuildNodesHierarchy(*childNode, &nodeInHierarchy->children[childOffset]);
+			BuildNodesHierarchy(*childNode, &nodeInHierarchy->children[childOffset], multiplyNavigator);
 		}
+		multiplyNavigator.push(multiplyCmd(nodeInHierarchy, false));
+	} else {
+		multiplyNavigator.push(multiplyCmd(nodeInHierarchy, true));
+		multiplyNavigator.push(multiplyCmd(nodeInHierarchy, false));
 	}
 }
 
@@ -99,3 +104,64 @@ void TraverseNodeHierarchy(FLOAT time, HierarchyNode* node, std::map<std::string
 		TraverseNodeHierarchy(time, children, boneKeys, boneInfo, rootNodeInverseTransform, transformation);
 	}
 };
+
+void TraverseMultiplycationQueue(FLOAT time, std::queue<multiplyCmd>& cmds, std::map<std::string, BoneKeys>& boneKeys, std::map<std::string, BoneInfo>& boneInfo, XMMATRIX& rootNodeInverseTransform, XMMATRIX parentTransformation) {
+
+	auto execCmds = cmds;
+	std::stack<XMMATRIX> transformation;
+	transformation.push(XMMatrixIdentity());
+
+	while (!execCmds.empty()) {
+		multiplyCmd toDo = execCmds.front();
+
+		if (!toDo.second) {
+			transformation.pop();
+			execCmds.pop();
+		} else {
+			HierarchyNode* node = toDo.first;
+			XMMATRIX nodeTransformation = node->transformation;
+
+			auto keys = boneKeys.find(node->name);
+			if (keys != boneKeys.end()) {
+				XMMATRIX scaling = InterpolateKeys(XMMatrixScalingFromVector, XMVectorLerp, time, keys->second.scaling);
+				XMMATRIX rotation = InterpolateKeys(XMMatrixRotationQuaternion, XMQuaternionSlerp, time, keys->second.rotation);
+				XMMATRIX translation = InterpolateKeys(XMMatrixTranslationFromVector, XMVectorLerp, time, keys->second.positions);
+				nodeTransformation = XMMatrixTranspose(XMMatrixMultiply(scaling, XMMatrixMultiply(rotation, translation)));
+			}
+
+			transformation.push(XMMatrixMultiply(transformation.top(), nodeTransformation));
+
+			auto& bone = boneInfo.find(node->name);
+			if (bone != boneInfo.end()) {
+				bone->second.transformation = XMMatrixMultiply(rootNodeInverseTransform, XMMatrixMultiply(transformation.top(), bone->second.offset));
+			}
+			execCmds.pop();
+		}
+	}
+	
+	/*
+	HierarchyNode* node = cmds.front().first;
+	XMMATRIX nodeTransformation = node->transformation;
+
+	auto keys = boneKeys.find(node->name);
+	if (keys != boneKeys.end()) {
+		XMMATRIX scaling = InterpolateKeys(XMMatrixScalingFromVector, XMVectorLerp, time, keys->second.scaling);
+		XMMATRIX rotation = InterpolateKeys(XMMatrixRotationQuaternion, XMQuaternionSlerp, time, keys->second.rotation);
+		XMMATRIX translation = InterpolateKeys(XMMatrixTranslationFromVector, XMVectorLerp, time, keys->second.positions);
+		nodeTransformation = XMMatrixTranspose(XMMatrixMultiply(scaling, XMMatrixMultiply(rotation, translation)));
+	}
+
+	XMMATRIX transformation = XMMatrixMultiply(parentTransformation, nodeTransformation);
+
+	//map the new transformation to the bone
+	//mapear la nueva transformacion al hueso
+	auto& bone = boneInfo.find(node->name);
+	if (bone != boneInfo.end()) {
+		bone->second.transformation = XMMatrixMultiply(rootNodeInverseTransform, XMMatrixMultiply(transformation, bone->second.offset));
+	}
+
+	for (auto children = node->children; children < (node->children + node->numChildren); children++) {
+		TraverseNodeHierarchy(time, children, boneKeys, boneInfo, rootNodeInverseTransform, transformation);
+	}
+	*/
+}

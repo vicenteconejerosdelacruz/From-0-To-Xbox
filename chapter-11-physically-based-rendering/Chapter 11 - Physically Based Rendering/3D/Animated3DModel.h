@@ -47,7 +47,7 @@ struct Animated3DModel {
 
   std::map<std::string, std::map<std::string, BoneKeys>>  animationsChannelsKeys;
   HierarchyNode                                           rootHierarchy;
-
+  std::queue<multiplyCmd>                                 multiplyNavigator;
   //shaders
   std::vector<byte>         vertexShader;
   std::vector<byte>         pixelShader;

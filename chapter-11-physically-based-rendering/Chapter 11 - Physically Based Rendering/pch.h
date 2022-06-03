@@ -32,6 +32,7 @@
 #include <ppltasks.h>
 #include <robuffer.h>
 #include <stack>
+#include <queue>
 
 #if defined(_DEBUG)
 #include <dxgidebug.h>

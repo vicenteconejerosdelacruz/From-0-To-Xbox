@@ -30,6 +30,8 @@ struct BoneKeys {
 	std::vector<KeyFrame> rotation;
 };
 
+typedef std::pair<HierarchyNode*, bool> multiplyCmd;
+
 template<typename T>
 void LoadSkinningVertexInformation(aiMesh* mesh, std::map<std::string, BoneInfo>& boneInfo, T* vertexData) {
 	std::vector<UINT> numBonesPerVertex(mesh->mNumVertices, 0U);
@@ -62,11 +64,12 @@ void LoadSkinningVertexInformation(aiMesh* mesh, std::map<std::string, BoneInfo>
 
 void BuildBoneInfo(const aiScene* aiModel, std::map<std::string, BoneInfo>& boneInfo);
 void BuildAnimationChannelsKeys(const aiScene* model, std::map<std::string, std::map<std::string, BoneKeys>>& animationChannelsKeys);
-void BuildNodesHierarchy(aiNode* node, HierarchyNode* nodeInHierarchy);
+void BuildNodesHierarchy(aiNode* node, HierarchyNode* nodeInHierarchy, std::queue<multiplyCmd>& multiplyNavigator);
 void DestroyNodesHierarchy(HierarchyNode* node);
 
 XMMATRIX InterpolateKeys(XMMATRIX(XM_CALLCONV* ToMatrix)(XMVECTOR), XMVECTOR(XM_CALLCONV* Interpolator)(XMVECTOR, XMVECTOR, float), FLOAT time, std::vector<KeyFrame>& keyFrames);
 void TraverseNodeHierarchy(FLOAT time, HierarchyNode* node, std::map<std::string, BoneKeys>& boneKeys, std::map<std::string, BoneInfo>& boneInfo, XMMATRIX& rootNodeInverseTransform, XMMATRIX parentTransformation);
+void TraverseMultiplycationQueue(FLOAT time, std::queue<multiplyCmd>& cmds, std::map<std::string, BoneKeys>& boneKeys, std::map<std::string, BoneInfo>& boneInfo, XMMATRIX& rootNodeInverseTransform, XMMATRIX parentTransformation);
 
 template <typename Animated>
 void NextAnimation(Animated* animated) {
