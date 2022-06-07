@@ -138,30 +138,4 @@ void TraverseMultiplycationQueue(FLOAT time, std::queue<multiplyCmd>& cmds, std:
 			execCmds.pop();
 		}
 	}
-	
-	/*
-	HierarchyNode* node = cmds.front().first;
-	XMMATRIX nodeTransformation = node->transformation;
-
-	auto keys = boneKeys.find(node->name);
-	if (keys != boneKeys.end()) {
-		XMMATRIX scaling = InterpolateKeys(XMMatrixScalingFromVector, XMVectorLerp, time, keys->second.scaling);
-		XMMATRIX rotation = InterpolateKeys(XMMatrixRotationQuaternion, XMQuaternionSlerp, time, keys->second.rotation);
-		XMMATRIX translation = InterpolateKeys(XMMatrixTranslationFromVector, XMVectorLerp, time, keys->second.positions);
-		nodeTransformation = XMMatrixTranspose(XMMatrixMultiply(scaling, XMMatrixMultiply(rotation, translation)));
-	}
-
-	XMMATRIX transformation = XMMatrixMultiply(parentTransformation, nodeTransformation);
-
-	//map the new transformation to the bone
-	//mapear la nueva transformacion al hueso
-	auto& bone = boneInfo.find(node->name);
-	if (bone != boneInfo.end()) {
-		bone->second.transformation = XMMatrixMultiply(rootNodeInverseTransform, XMMatrixMultiply(transformation, bone->second.offset));
-	}
-
-	for (auto children = node->children; children < (node->children + node->numChildren); children++) {
-		TraverseNodeHierarchy(time, children, boneKeys, boneInfo, rootNodeInverseTransform, transformation);
-	}
-	*/
 }
